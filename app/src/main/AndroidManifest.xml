@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.gujun.deeplink">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".DeepLinkActivity"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <!-- 步骤一:添加action -->
+                <!-- 将数据显示给用户。这是对数据执行的最常见的操作——这是您可以对数据块使用的通用操作，以获得最合理的结果。 -->
+                <action android:name="android.intent.action.VIEW" />
+                <!-- 步骤二:添加category -->
+                <!-- 隐式的Intent启动Activity，必须要加上此category，否则匹配失败 -->
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <!-- 步骤三:添加category -->
+                <!-- 可以从浏览器安全调用的活动必须支持此类别，必须配合data使用 -->
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- 步骤四:添加data -->
+                <!-- data为隐式启动静态传递数据时使用，数据格式：<scheme> :// <host> : <port> / [ <path> | <pathPrefix> | <pathPattern> ] -->
+                <!-- 与H5定义的数据格式：test://demo/deep/aaaa?type=1 -->
+                <data
+                    android:host="demo"
+                    android:path="/deep/aaaa"
+                    android:scheme="test" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ExternalShareActivity"
+            android:launchMode="singleTask">
+
+            <!-- 系统分享 单个文件 -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <!-- 文字类型 -->
+                <data android:mimeType="text/*" />
+                <!-- 图片类型 -->
+                <data android:mimeType="image/*" />
+                <!-- 视频类型 -->
+                <data android:mimeType="video/*" />
+                <!-- 音频类型 -->
+                <data android:mimeType="audio/*" />
+                <!-- 文件类型 -->
+                <data android:mimeType="application/*" />
+            </intent-filter>
+
+            <!-- 系统分享 多个文件 -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <!-- 图片类型 -->
+                <data android:mimeType="image/*" />
+            </intent-filter>
+
+        </activity>
+    </application>
+
+</manifest>
